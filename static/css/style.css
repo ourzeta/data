@@ -1,0 +1,575 @@
+/* HyperUI 风格的现代化样式 */
+/* 基础样式重置和优化 */
+/* 性能优化 - 减少重绘和回流 */
+* {
+    box-sizing: border-box;
+}
+
+/* 启用硬件加速 */
+.table-responsive,
+.card,
+.table tbody tr {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* 优化动画性能 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* 卡片组件 - 现代化设计 */
+.card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 表格容器样式已由DaisyUI的overflow-x-auto和overflow-y-auto类替代 */
+
+/* 自定义滚动条样式已移除，使用DaisyUI默认样式 */
+
+/* 表格样式已由DaisyUI的table和table-zebra类替代 */
+
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 表头和表格行样式已由DaisyUI的table组件替代 */
+
+/* 表格容器阴影效果已移除，使用DaisyUI默认样式 */
+
+/* 所有表格样式已由DaisyUI的table组件替代 */
+
+/* HyperUI 风格表格动画 */
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* 表格容器样式 */
+.table-responsive {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* 表格样式 */
+.table {
+    background: transparent;
+    border-radius: 0;
+    margin: 0;
+}
+
+/* 表格单元格最小宽度 */
+.table th,
+.table td {
+    min-width: 100px;
+    white-space: nowrap;
+}
+
+.table thead th {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    border: none;
+    padding: 1rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.table tbody tr {
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.table tbody td {
+    color: rgba(255, 255, 255, 0.9);
+    border: none;
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+}
+
+.table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.table tbody tr:nth-child(2) { animation-delay: 0.15s; }
+.table tbody tr:nth-child(3) { animation-delay: 0.2s; }
+.table tbody tr:nth-child(4) { animation-delay: 0.25s; }
+.table tbody tr:nth-child(5) { animation-delay: 0.3s; }
+.table tbody tr:nth-child(6) { animation-delay: 0.35s; }
+.table tbody tr:nth-child(7) { animation-delay: 0.4s; }
+.table tbody tr:nth-child(8) { animation-delay: 0.45s; }
+.table tbody tr:nth-child(9) { animation-delay: 0.5s; }
+.table tbody tr:nth-child(10) { animation-delay: 0.55s; }
+
+/* 表头图标效果和输入框样式已由DaisyUI组件替代 */
+
+.styled-table td:last-child {
+    text-align: right;
+    font-weight: 500;
+}
+
+/* 状态消息样式已由DaisyUI的alert组件替代 */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 为DaisyUI的alert组件添加动画 */
+.alert {
+    animation: slideIn 0.5s ease-out;
+}
+
+/* 加载动画样式已由DaisyUI的loading组件替代 */
+
+/* 按钮样式 - 简洁设计 */
+.btn-primary {
+    background: #3b82f6;
+    border: none;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #2563eb;
+}
+
+.btn-primary:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.btn-outline-primary {
+    background: transparent;
+    border: 1px solid #3b82f6;
+    color: #3b82f6;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-primary:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+/* 输入框样式 - 简洁设计 */
+.form-control {
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    color: #1f2937;
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-control::placeholder {
+    color: #9ca3af;
+}
+
+.form-label {
+    color: #374151;
+    font-weight: 500;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-text {
+    color: #6c757d;
+    font-size: 0.875em;
+}
+
+/* 状态消息动画 */
+.alert {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 页面样式 - 简洁设计 */
+body {
+    background: #f9fafb;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1f2937;
+}
+
+.container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* 标题样式 */
+h1, h2 {
+    color: #1f2937;
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    h1, h2 {
+        font-size: 2.5rem;
+    }
+}
+
+/* 结果卡片特殊样式 */
+#resultCard {
+    margin-top: 1rem;
+    animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 状态消息样式 */
+.alert {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-weight: 500;
+}
+
+.alert-info {
+    background: #dbeafe;
+    border: 1px solid #93c5fd;
+    color: #1e40af;
+}
+
+.alert-error {
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    color: #dc2626;
+}
+
+/* 加载状态 */
+.spinner-border {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #e5e7eb;
+    border-top: 2px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 表格样式 */
+.styled-table {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    table-layout: auto;
+    white-space: nowrap;
+}
+
+/* 表格容器滚动优化 */
+.overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+    height: 8px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.styled-table th {
+    background: #f9fafb;
+    color: #374151;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.875rem;
+    min-width: 80px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+
+.styled-table td {
+    padding: 0.75rem 1rem;
+    color: #1f2937;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 0.875rem;
+    min-width: 80px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+
+.styled-table tr:hover td {
+    background: #f9fafb;
+}
+
+.styled-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* 数字列样式 */
+.styled-table td:nth-child(n+2) {
+    text-align: right;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-weight: 500;
+}
+
+/* 日期列样式 */
+.styled-table td:first-child {
+    min-width: 80px;
+    font-weight: 600;
+    position: relative;
+}
+
+.styled-table td:first-child::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 2px;
+}
+
+/* 响应式调整 */
+@media (max-width: 1200px) {
+    .styled-table {
+        font-size: 0.85em;
+        min-width: 350px;
+    }
+    
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 16px;
+        min-width: 70px;
+    }
+}
+
+@media (max-width: 992px) {
+    
+    .styled-table {
+        font-size: 0.8em;
+        min-width: 320px;
+    }
+    
+    .styled-table th,
+    .styled-table td {
+        padding: 10px 14px;
+        min-width: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        padding-top: 0.5rem;
+    }
+    
+    .card {
+        margin: 0.5rem;
+        border-radius: 10px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .table-responsive {
+        border-radius: 8px;
+    }
+    
+    h1, h2 {
+        font-size: 1.75rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .btn-primary {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+        border-radius: 20px;
+    }
+    
+    .form-control {
+        padding: 0.625rem;
+        font-size: 0.875rem;
+    }
+    
+    .styled-table {
+        font-size: 0.75rem;
+        min-width: 300px;
+    }
+    
+    .styled-table th,
+    .styled-table td {
+        padding: 0.5rem;
+        min-width: 60px;
+        max-width: 120px;
+    }
+    
+    /* 移动端表格头部固定 */
+    .styled-table thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .table-responsive {
+        margin: 0 -1rem;
+        border-radius: 0;
+        -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-x pan-y !important;
+    }
+    
+    /* 移动端表格滚动优化 */
+    .overflow-x-auto {
+        -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-x pan-y !important;
+        scroll-behavior: smooth;
+    }
+    
+    /* 移动端隐藏滚动条但保持功能 */
+    .overflow-x-auto::-webkit-scrollbar {
+        height: 4px;
+    }
+    
+    .overflow-x-auto::-webkit-scrollbar-thumb {
+        background: rgba(203, 213, 225, 0.8);
+    }
+    
+    .styled-table {
+        font-size: 0.7em;
+        min-width: 280px;
+        border-radius: 0;
+    }
+    
+    .styled-table th,
+    .styled-table td {
+        padding: 6px 10px;
+        min-width: 45px;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .btn-primary {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .form-control {
+        font-size: 16px; /* 防止iOS缩放 */
+    }
+}
+
+/* 横屏模式优化 */
+@media (max-height: 500px) and (orientation: landscape) {
+    .table-responsive {
+        max-height: 50vh;
+    }
+    
+    .container {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+}
