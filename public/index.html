@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>官方数据接口查询</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-md mx-auto px-4 py-6">
+        <!-- 标题 -->
+        <h1 class="text-2xl font-semibold text-gray-800 text-center mb-6">数据查询</h1>
+
+        <!-- 公告栏 -->
+        <div id="announcement"
+            class="bg-gradient-to-r from-emerald-300 to-teal-400 text-white rounded-xl p-3 mb-6 shadow-lg border border-emerald-100">
+            <div class="flex items-start">
+                <svg class="w-5 h-5 mt-0.5 mr-3 flex-shrink-0 text-emerald-50" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <div class="flex-1">
+                    <h3 class="font-semibold text-sm mb-1 text-white">系统公告</h3>
+                    <p id="announcementText" class="text-sm text-emerald-50 leading-relaxed">
+                        欢迎使用数据查询系统！请确保输入正确的UK码和日期范围以获取准确的查询结果。
+                    </p>
+                </div>
+                <button id="closeAnnouncement"
+                    class="ml-2 text-emerald-100 hover:text-white transition-colors duration-200 rounded-full p-1 hover:bg-emerald-400">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 查询表单 -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+            <form id="queryForm" class="space-y-5">
+                <!-- 项目ID和UK码输入 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="appId" class="block text-sm font-medium text-gray-700 mb-2">项目ID</label>
+                        <input type="text" id="appId" name="app_id" placeholder="默认: 649"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="ukCode" class="block text-sm font-medium text-gray-700 mb-2">UK码</label>
+                        <input type="text" id="ukCode" name="uk_code" required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    </div>
+                </div>
+
+                <!-- 日期范围 -->
+                <div class="space-y-4">
+                    <div>
+                        <label for="startDate" class="block text-sm font-medium text-gray-700 mb-2">开始日期</label>
+                        <input type="date" id="startDate" name="start_date" required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="endDate" class="block text-sm font-medium text-gray-700 mb-2">结束日期</label>
+                        <input type="date" id="endDate" name="end_date" required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+
+                <!-- 隐藏字段 -->
+                <input type="checkbox" id="headless" name="headless" checked class="hidden">
+
+                <!-- 查询按钮 -->
+                <button type="submit" id="queryBtn"
+                    class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span id="loadingSpinner"
+                        class="hidden inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+                    <span id="btnText">查询</span>
+                </button>
+            </form>
+
+            <!-- 项目ID提示信息 -->
+            <div id="appIdTip" class="hidden mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <div class="flex items-start">
+                    <svg class="w-5 h-5 text-blue-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor"
+                        viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div class="text-sm text-blue-700">
+                        <p id="appIdTipText"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 状态消息 -->
+        <div id="statusMessage" class="hidden mb-4 p-4 rounded-lg text-sm"></div>
+
+        <!-- 结果显示 -->
+        <div id="resultCard" class="hidden bg-white rounded-xl shadow-sm border border-gray-100">
+            <div class="p-4 border-b border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-800">查询结果</h2>
+                <div class="mt-2 text-sm text-gray-600">转存激励【0.1】 新用户奖励【3】 会员分润【10%】 </div>
+                <div id="totalStats" class="mt-3 p-3 bg-blue-50 rounded-lg hidden">
+                    <h3 class="text-sm font-medium text-blue-700 mb-2">查询日期间累加总和</h3>
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-white p-2 rounded shadow-sm">
+                            <div class="text-xs text-gray-500">总移动拉新数</div>
+                            <div id="totalNewUsers" class="font-semibold text-blue-600">0</div>
+                        </div>
+                        <div class="bg-white p-2 rounded shadow-sm">
+                            <div class="text-xs text-gray-500">移动总转存数</div>
+                            <div id="totalTransfers" class="font-semibold text-blue-600">0</div>
+                        </div>
+                        <div class="bg-white p-2 rounded shadow-sm">
+                            <div class="text-xs text-gray-500">总会员订单数</div>
+                            <div id="totalOrders" class="font-semibold text-blue-600">0</div>
+                        </div>
+                    </div>
+                    <div class="mt-2 grid grid-cols-2 gap-3 text-center">
+                        <div class="bg-white p-2 rounded shadow-sm">
+                            <div class="text-xs text-gray-500">拉新总收益</div>
+                            <div id="totalNewUserIncome" class="font-semibold text-blue-600">0元</div>
+                        </div>
+                        <div class="bg-white p-2 rounded shadow-sm">
+                            <div class="text-xs text-gray-500">转存总收益</div>
+                            <div id="totalTransferIncome" class="font-semibold text-blue-600">0元</div>
+                        </div>
+                    </div>
+                    <div class="mt-2 grid grid-cols-1 gap-3 text-center">
+                        <div class="bg-white p-2 rounded shadow-sm">
+                            <div class="text-xs text-gray-500">总会员佣金</div>
+                            <div id="totalCommission" class="font-semibold text-blue-600">0元</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <div id="resultTable" class="overflow-x-auto -mx-4" style="width:100%;"></div>
+                <div class="flex gap-2 mt-4 pt-4 border-t border-gray-100">
+                    <button onclick="exportData('html')"
+                        class="flex-1 px-4 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">HTML</button>
+                    <button onclick="exportData('markdown')"
+                        class="flex-1 px-4 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">Markdown</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+
+    <!-- 客服按钮 -->
+    <div id="customerService" class="fixed bottom-20 right-6 z-50">
+        <button
+            class="bg-blue-300 hover:bg-blue-400 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 hover:-translate-y-1 group">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span
+                class="absolute -top-1 -right-1 bg-red-400 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">!</span>
+        </button>
+    </div>
+
+</body>
+
+</html>

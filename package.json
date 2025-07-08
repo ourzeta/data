@@ -1,0 +1,26 @@
+{
+  "name": "data-query-app",
+  "version": "1.0.0",
+  "description": "轻量级数据查询应用 - Node.js版本",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "install-deps": "npm install --registry=https://registry.npmmirror.com",
+    "setup": "chmod +x install.sh && ./install.sh"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "playwright": "^1.39.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "compression": "^1.7.4"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": ["data-query", "nodejs", "lightweight"],
+  "author": "Data Query Team",
+  "license": "MIT"
+}
